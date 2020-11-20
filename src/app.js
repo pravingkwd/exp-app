@@ -16,7 +16,7 @@ import { setEndDate,setTextFilter,setStartDate , sortByAmount, sortByDate } from
  import  getVisibleExpenses   from './selectors/expenses';
 const store = configureStore();
 
-store.dispatch(addExpense({
+/*store.dispatch(addExpense({
     description : 'Water Bill',amount:300
 }));
 
@@ -25,7 +25,7 @@ store.dispatch(addExpense({
 }));
 store.dispatch(addExpense({
     description : 'Rent Bill',amount:109500
-}));
+}));*/
 //store.dispatch(setTextFilter('Water'));
 
 const state = store.getState();
