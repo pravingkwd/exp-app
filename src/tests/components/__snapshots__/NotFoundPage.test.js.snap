@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Shoudl run NoFounePage 1`] = `
+<div>
+  404! 
+  <[object Object]
+    to="/"
+  >
+    Go Home Page 
+  </[object Object]>
+</div>
+`;
