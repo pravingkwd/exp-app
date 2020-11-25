@@ -1,6 +1,13 @@
 const path = require('path');
 
-module.exports = {
+
+
+module.exports = (env) => {
+    const isProduction = env === 'production';
+
+    
+
+    return {
     entry : './src/app.js',
     output :{
         path : path.join(__dirname,'public'),
@@ -16,20 +23,21 @@ module.exports = {
         },
         {   
             test:/\.s?css$/,
-            use :[
+           use :[
                 'style-loader',
                 'css-loader',
                 'sass-loader'
             ]
+            
 
 
         }
     ]
     },
-    devtool:'eval-cheap-module-source-map',
+    devtool: isProduction ? 'source-map' : 'eval-cheap-module-source-map',
     devServer : {
         contentBase : path.join(__dirname,'public'),
         historyApiFallback:true 
     }
-
+    }
 }
