@@ -8,9 +8,9 @@ exports[`Should set up ExpenseListItem  1`] = `
     gum
   </[object Object]>
   <p>
-    195
-      = 
-    345600000
+    $1.95
+    -
+    January 5th, 1970
   </p>
 </div>
 `;
