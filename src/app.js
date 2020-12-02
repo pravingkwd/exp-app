@@ -14,6 +14,8 @@ import configureStore from './store/configureStore';
 import { addExpense , removeExpense , editExpense } from './actions/expenses';
 import { setEndDate,setTextFilter,setStartDate , sortByAmount, sortByDate } from './actions/filters';
  import  getVisibleExpenses   from './selectors/expenses';
+import firebase from './firebase/firebase';
+
 const store = configureStore();
 
 /*store.dispatch(addExpense({
