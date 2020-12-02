@@ -11,10 +11,10 @@ import AppRouter from './routers/AppRouter';
 
 import configureStore from './store/configureStore';
 
-import { addExpense , removeExpense , editExpense } from './actions/expenses';
+import { startSetExpenses } from './actions/expenses';
 import { setEndDate,setTextFilter,setStartDate , sortByAmount, sortByDate } from './actions/filters';
  import  getVisibleExpenses   from './selectors/expenses';
-import firebase from './firebase/firebase';
+import database from './firebase/firebase';
 
 const store = configureStore();
 
@@ -30,16 +30,22 @@ store.dispatch(addExpense({
 }));*/
 //store.dispatch(setTextFilter('Water'));
 
-const state = store.getState();
+//const state = store.getState();
 
-const visibleExpenses = getVisibleExpenses(state.expenses,state.filters); 
+//const visibleExpenses = getVisibleExpenses(state.expenses,state.filters); 
 
 //console.log(visibleExpenses);
-console.log('a1pp.js');
+//console.log('a1pp.js');
 const jsx = (
     <Provider store={store}>
     <AppRouter />
     </Provider>
 );
 
-ReactDOM.render(jsx,document.getElementById('app'));
+
+ReactDOM.render(<p>Loading...</p>,document.getElementById('app'));
+
+store.dispatch(startSetExpenses()).then( ()=>{
+    ReactDOM.render(jsx,document.getElementById('app'));
+})
+
