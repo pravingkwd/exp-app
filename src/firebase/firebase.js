@@ -13,9 +13,15 @@ const firebaseConfig = {
   // Initialize Firebase
   firebase.initializeApp(firebaseConfig);
 
+
+
   const database = firebase.database();
 
-  export { firebase, database as default }
+  const googleAuthProvider = new firebase.auth.GoogleAuthProvider();
+
+
+
+  export { firebase, googleAuthProvider, database as default }
 
   /*database.ref().set({
       name:'Pravin Gaikwad',

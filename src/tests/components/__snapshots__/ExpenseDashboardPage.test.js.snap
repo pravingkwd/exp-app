@@ -2,7 +2,6 @@
 
 exports[`Should render ExpenseDasboardPage 1`] = `
 <div>
-  This is from Expense Dashboard Page
   <[object Object] />
   <[object Object] />
   <[object Object] />

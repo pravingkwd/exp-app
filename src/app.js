@@ -1,51 +1,47 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter, Route, Switch ,Link , NavLink } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import AppRouter, { history } from './routers/AppRouter';
+import configureStore from './store/configureStore';
+import { startSetExpenses } from './actions/expenses';
+import { login, logout } from './actions/auth';
+import getVisibleExpenses from './selectors/expenses';
 import 'normalize.css/normalize.css';
 import './styles/styles.scss';
 import 'react-dates/lib/css/_datepicker.css';
-
-import { Provider } from 'react-redux';
-
-import AppRouter from './routers/AppRouter';
-
-import configureStore from './store/configureStore';
-
-import { startSetExpenses } from './actions/expenses';
-import { setEndDate,setTextFilter,setStartDate , sortByAmount, sortByDate } from './actions/filters';
- import  getVisibleExpenses   from './selectors/expenses';
-import database from './firebase/firebase';
-
+import { firebase } from './firebase/firebase';
+import LoadingPage from './components/LoadingPage';
 const store = configureStore();
-
-/*store.dispatch(addExpense({
-    description : 'Water Bill',amount:300
-}));
-
-store.dispatch(addExpense({
-    description : 'Gas Bill', createdAt:1000
-}));
-store.dispatch(addExpense({
-    description : 'Rent Bill',amount:109500
-}));*/
-//store.dispatch(setTextFilter('Water'));
-
-//const state = store.getState();
-
-//const visibleExpenses = getVisibleExpenses(state.expenses,state.filters); 
-
-//console.log(visibleExpenses);
-//console.log('a1pp.js');
 const jsx = (
-    <Provider store={store}>
+  <Provider store={store}>
     <AppRouter />
-    </Provider>
+  </Provider>
 );
+let hasRendered = false;
+const renderApp = () => {
+  if (!hasRendered) {
+    ReactDOM.render(jsx, document.getElementById('app'));
+    hasRendered = true;
+  }
+};
 
+ReactDOM.render(<LoadingPage/>, document.getElementById('app'));
 
-ReactDOM.render(<p>Loading...</p>,document.getElementById('app'));
-
-store.dispatch(startSetExpenses()).then( ()=>{
-    ReactDOM.render(jsx,document.getElementById('app'));
-})
+firebase.auth().onAuthStateChanged((user) => {
+  if (user) {
+    console.log('log in');
+    store.dispatch(login(user.uid));
+    store.dispatch(startSetExpenses()).then(() => {
+      renderApp();
+      if (history.location.pathname === '/') {
+        history.push('/dashboard');
+      }
+    });
+  } else {
+    console.log('log out');
+    store.dispatch(logout());
+    renderApp();
+    
+  }
+});
 
